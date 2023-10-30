@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "arbora:item/aqua_sap_bottle"
-  }
-}
