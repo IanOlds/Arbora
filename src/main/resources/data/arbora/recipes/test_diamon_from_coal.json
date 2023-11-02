@@ -1,0 +1,16 @@
+{
+  "type": "arbora:essence_brewing",
+  "ingredients": [
+    {
+      "item": "minecraft:coal"
+    }
+  ],
+  "output": {
+    "count": 7,
+    "item": "minecraft:diamond"
+  },
+  "location": {
+    "x": 200,
+    "y": 200
+  }
+}
