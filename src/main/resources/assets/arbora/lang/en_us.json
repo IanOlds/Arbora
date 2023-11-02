@@ -1,0 +1,26 @@
+{
+  "item.arbora.aero_ichor_bottle" : "Aero-Ichor Bottle",
+  "item.arbora.aqua_ichor_bottle" : "Aqua-Ichor Bottle",
+  "item.arbora.chaos_ichor_bottle" : "Chaos-Ichor Bottle",
+  "item.arbora.cryro_ichor_bottle" : "Cryro-Ichor Bottle",
+  "item.arbora.mind_ichor_bottle" : "Mind-Ichor Bottle",
+  "item.arbora.order_ichor_bottle" : "Order-Ichor Bottle",
+  "item.arbora.pyro_ichor_bottle" : "Pyro-Ichor Bottle",
+  "item.arbora.spirit_ichor_bottle" : "Spirit-Ichor Bottle",
+  "item.arbora.terra_ichor_bottle" : "Terra-Ichor Bottle",
+
+  "block.arbora.magical_log": "Magical Log",
+  "block.arbora.magical_wood": "Magical Wood",
+  "block.arbora.stripped_magical_log": "Stripped Magical Log",
+  "block.arbora.stripped_magical_wood": "Stripped Magical Wood",
+
+  "block.arbora.magical_planks": "Magical Planks",
+  "block.arbora.magical_leaves": "Magical Leaves",
+  "block.arbora.magical_sapling": "Magical Sapling",
+
+  "block.arbora.essence_brewing_station": "Essence Brewing Station",
+  "creativetab.arbora_tab" : "Arbora Tab",
+
+  "item.arbora.metal_detector" : "Metal Detector",
+  "tooltip.arbora.metal_detector.tooltip" : "Finds Ores below You!"
+}

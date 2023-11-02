@@ -2,11 +2,15 @@
   "type": "arbora:essence_brewing",
   "ingredients": [
     {
-      "item": "minecraft:coal"
+      "item": "arbora:magical_planks"
     }
   ],
   "output": {
     "count": 7,
-    "item": "minecraft:diamond"
+    "item": "arbora:magical_log"
+  },
+  "location": {
+    "x": 200,
+    "y": 200
   }
 }

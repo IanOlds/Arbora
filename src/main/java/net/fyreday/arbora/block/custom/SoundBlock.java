@@ -1,4 +1,4 @@
-package net.fyreday.arbora.blocks.custom;
+package net.fyreday.arbora.block.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
