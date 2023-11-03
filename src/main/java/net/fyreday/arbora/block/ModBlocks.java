@@ -5,6 +5,7 @@ import net.fyreday.arbora.block.custom.EssenceBrewingStationBlock;
 import net.fyreday.arbora.block.custom.MagicalLog;
 import net.fyreday.arbora.block.custom.ModFlammableRotatedPillarBock;
 import net.fyreday.arbora.item.ModItems;
+import net.fyreday.arbora.worldgen.tree.MagicalTreeGrower;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.BlockItem;
@@ -73,7 +74,7 @@ public class ModBlocks {
                 }
             });
     public static final RegistryObject<Block> MAGICAL_SAPLING = registerBlock("magical_sapling",
-            () -> new SaplingBlock(new OakTreeGrower(),BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
+            () -> new SaplingBlock(new MagicalTreeGrower(),BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
     public static final RegistryObject<Block> ESSENCE_BREWING_STATION = registerBlock("essence_brewing_station",
             () -> new EssenceBrewingStationBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
 

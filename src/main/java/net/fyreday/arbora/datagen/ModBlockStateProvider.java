@@ -9,9 +9,12 @@ import net.fyreday.arbora.util.Util;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SaplingBlock;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -41,7 +44,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.MAGICAL_PLANKS);
 
         leavesBlock(ModBlocks.MAGICAL_LEAVES);
-
+        saplingBlock(ModBlocks.MAGICAL_SAPLING);
+        flatBlockItem(ModBlocks.MAGICAL_SAPLING);
         simpleBlockWithItem(ModBlocks.ESSENCE_BREWING_STATION.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/essence_brewing_station")));
     }
@@ -50,6 +54,15 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(blockRegistryObject.get(),
                 models().singleTexture(ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath(), new ResourceLocation("minecraft:block/leaves"),
                         "all", blockTexture(blockRegistryObject.get())).renderType("cutout"));
+    }
+    private void saplingBlock(RegistryObject<Block> saplingRegistryObject){
+        simpleBlock(saplingRegistryObject.get(),
+                models().cross(ForgeRegistries.BLOCKS.getKey(saplingRegistryObject.get()).getPath(), blockTexture(saplingRegistryObject.get())).renderType("cutout"));
+    }
+    private void flatBlockItem(RegistryObject<Block> block) {
+        itemModels().withExistingParent(block.getId().getPath(),
+                new ResourceLocation("item/generated")).texture("layer0",
+                new ResourceLocation(Arbora.MOD_ID,"block/" + block.getId().getPath()));
     }
     private void blockItem(RegistryObject<Block> blockRegistryObject) {
         simpleBlockItem(blockRegistryObject.get(), new ModelFile.UncheckedModelFile(Arbora.MOD_ID +
@@ -96,17 +109,17 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 .modelForState().modelFile(new ModelFile.UncheckedModelFile(modLoc("block/magical_log_horizontal_sap"))).rotationX(90).addModel()
                 
                 .partialState().with(MagicalLog.AXIS, Direction.Axis.X).with(MagicalLog.SAP_LEVEL, 0)
-                .modelForState().modelFile(horizontal).rotationY(90).addModel()
+                .modelForState().modelFile(horizontal).rotationX(90).rotationY(90).addModel()
                 .partialState().with(MagicalLog.AXIS, Direction.Axis.X).with(MagicalLog.SAP_LEVEL, 1)
-                .modelForState().modelFile(horizontal).rotationY(90).addModel()
+                .modelForState().modelFile(horizontal).rotationX(90).rotationY(90).addModel()
                 .partialState().with(MagicalLog.AXIS, Direction.Axis.X).with(MagicalLog.SAP_LEVEL, 2)
-                .modelForState().modelFile(horizontal).rotationY(90).addModel()
+                .modelForState().modelFile(horizontal).rotationX(90).rotationY(90).addModel()
                 .partialState().with(MagicalLog.AXIS, Direction.Axis.X).with(MagicalLog.SAP_LEVEL, 3)
-                .modelForState().modelFile(horizontal).rotationY(90).addModel()
+                .modelForState().modelFile(horizontal).rotationX(90).rotationY(90).addModel()
                 .partialState().with(MagicalLog.AXIS, Direction.Axis.X).with(MagicalLog.SAP_LEVEL, 4)
-                .modelForState().modelFile(horizontal).rotationY(90).addModel()
+                .modelForState().modelFile(horizontal).rotationX(90).rotationY(90).addModel()
                 .partialState().with(MagicalLog.AXIS, Direction.Axis.X).with(MagicalLog.SAP_LEVEL, 5)
-                .modelForState().modelFile(new ModelFile.UncheckedModelFile(modLoc("block/magical_log_horizontal_sap"))).rotationY(90).addModel();
+                .modelForState().modelFile(new ModelFile.UncheckedModelFile(modLoc("block/magical_log_horizontal_sap"))).rotationX(90).rotationY(90).addModel();
     }
     private String name(Block block) {
         return key(block).getPath();

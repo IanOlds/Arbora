@@ -73,7 +73,7 @@ public class Arbora
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
-
+        modEventBus.addListener(this::registerBlockColorHandler);
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
@@ -82,9 +82,8 @@ public class Arbora
     {
 
     }
-
     @SubscribeEvent
-    public static void registerBlockColorHandler(RegisterColorHandlersEvent.Block event){
+    public void registerBlockColorHandler(RegisterColorHandlersEvent.Block event){
         System.out.println("REGISTER COLORS");
         event.getBlockColors().register((pState, pLevel, pPos, pTintIndex) -> {
             BlockEntity be = pLevel.getBlockEntity(pPos);

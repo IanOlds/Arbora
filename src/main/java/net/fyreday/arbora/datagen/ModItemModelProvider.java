@@ -1,6 +1,7 @@
 package net.fyreday.arbora.datagen;
 
 import net.fyreday.arbora.Arbora;
+import net.fyreday.arbora.block.ModBlocks;
 import net.fyreday.arbora.item.ModItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;

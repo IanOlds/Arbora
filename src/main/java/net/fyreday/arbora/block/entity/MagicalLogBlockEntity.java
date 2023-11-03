@@ -54,7 +54,7 @@ public class MagicalLogBlockEntity extends BlockEntity {
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
         if(dying){
             counter++;
-            if(counter > 10) {
+            if(counter > 20) {
                 setAllNeighborsToWither(pLevel, pPos);
                 pLevel.setBlockAndUpdate(pPos, ModBlocks.MAGICAL_LOG_DEAD.get().defaultBlockState().setValue(BlockStateProperties.AXIS, pState.getValue(BlockStateProperties.AXIS)));
             }
