@@ -2,15 +2,30 @@ package net.fyreday.arbora;
 
 import com.mojang.logging.LogUtils;
 import net.fyreday.arbora.block.ModBlocks;
+import net.fyreday.arbora.block.custom.MagicalLog;
+import net.fyreday.arbora.block.entity.MagicalLogBlockEntity;
 import net.fyreday.arbora.block.entity.ModBlockEntities;
 import net.fyreday.arbora.item.ModCreativeModeTabs;
 import net.fyreday.arbora.item.ModItems;
 import net.fyreday.arbora.recipe.ModRecipes;
 import net.fyreday.arbora.screen.EssenceBrewingScreen;
 import net.fyreday.arbora.screen.ModMenuTypes;
+import net.fyreday.arbora.util.ArboraEnums;
+import net.fyreday.arbora.util.Util;
+import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.PanoramaRenderer;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.Containers;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.RenderTypeHelper;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -22,7 +37,10 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
+
+import java.awt.*;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Arbora.MOD_ID)
@@ -65,6 +83,18 @@ public class Arbora
 
     }
 
+    @SubscribeEvent
+    public static void registerBlockColorHandler(RegisterColorHandlersEvent.Block event){
+        System.out.println("REGISTER COLORS");
+        event.getBlockColors().register((pState, pLevel, pPos, pTintIndex) -> {
+            BlockEntity be = pLevel.getBlockEntity(pPos);
+            if (be instanceof MagicalLogBlockEntity) {
+                return Util.getIntFromColor(((MagicalLogBlockEntity) be).getSapType().getColor());
+            }
+            return Util.getIntFromColor(new Color(255,0,0));
+        }, ModBlocks.MAGICAL_LOG.get());
+    }
+
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
@@ -80,6 +110,7 @@ public class Arbora
 
     }
 
+
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
@@ -88,6 +119,9 @@ public class Arbora
         public static void onClientSetup(FMLClientSetupEvent event)
         {
             MenuScreens.register(ModMenuTypes.ESSENCE_BREWING_MENU.get(), EssenceBrewingScreen::new);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.MAGICAL_LOG.get(), RenderType.cutoutMipped());
         }
+
+
     }
 }

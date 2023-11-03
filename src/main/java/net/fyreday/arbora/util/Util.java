@@ -2,6 +2,7 @@ package net.fyreday.arbora.util;
 
 import net.minecraft.core.BlockPos;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,5 +37,17 @@ public class Util {
         blockPosList.add(blockPos.west().north());
 
         return blockPosList;
+    }
+
+    public static int getIntFromColor(Color c){
+        int rbgByBytes;
+        int a = c.getAlpha();
+        int r = c.getRed();
+        int g = c.getGreen();
+        int b = c.getBlue();
+        r <<= 16; //shift 16 bits left
+        g <<= 8;//shift 8 bits left
+        rbgByBytes = r | g | b; // OR operator all 3 channels.
+        return rbgByBytes;
     }
 }

@@ -5,6 +5,7 @@ import net.fyreday.arbora.block.entity.MagicalLogBlockEntity;
 import net.fyreday.arbora.block.entity.ModBlockEntities;
 import net.fyreday.arbora.item.ModItems;
 import net.fyreday.arbora.util.ArboraBlockProperties;
+import net.fyreday.arbora.util.ArboraEnums;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -18,29 +19,48 @@ import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolAction;
 import org.jetbrains.annotations.Nullable;
 
-public class MagicalLog extends ModFlammableRotatedPillarBock implements EntityBlock {
+public class MagicalLog extends BaseEntityBlock {
 
+    public static final VoxelShape SHAPE = Block.box(0,0,0, 16,16,16);
+    public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.AXIS;
     public static final IntegerProperty SAP_LEVEL = ArboraBlockProperties.SAP_LEVEL;
     public static final int MAX_SAP_LEVELS = 5;
+
+    @Override
+    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+        return SHAPE;
+    }
+    @Override
+    public RenderShape getRenderShape(BlockState pState) {
+        return RenderShape.MODEL;
+    }
+
+
+
     public MagicalLog(Properties pProperties) {
         super(pProperties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(SAP_LEVEL, Integer.valueOf(0)));
+        this.registerDefaultState(this.stateDefinition.any().setValue(SAP_LEVEL, Integer.valueOf(0)).setValue(AXIS, Direction.Axis.Y));
     }
 
     @Override
@@ -72,6 +92,29 @@ public class MagicalLog extends ModFlammableRotatedPillarBock implements EntityB
         super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
     }
 
+    public BlockState rotate(BlockState pState, Rotation pRot) {
+        return rotatePillar(pState, pRot);
+    }
+
+    public static BlockState rotatePillar(BlockState pState, Rotation pRotation) {
+        switch (pRotation) {
+            case COUNTERCLOCKWISE_90:
+            case CLOCKWISE_90:
+                switch ((Direction.Axis)pState.getValue(AXIS)) {
+                    case X:
+                        return pState.setValue(AXIS, Direction.Axis.Z);
+                    case Z:
+                        return pState.setValue(AXIS, Direction.Axis.X);
+                    default:
+                        return pState;
+                }
+            default:
+                return pState;
+        }
+    }
+    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
+        return this.defaultBlockState().setValue(AXIS, pContext.getClickedFace().getAxis());
+    }
     public void resetSapLevel(Level pLevel, BlockState pState, BlockPos pPos) {
         pLevel.setBlock(pPos, pState.setValue(SAP_LEVEL, Integer.valueOf(0)), 3);
     }
@@ -107,33 +150,42 @@ public class MagicalLog extends ModFlammableRotatedPillarBock implements EntityB
         }
     }
 
-    private Item getSapByBiome(Level pLevel, BlockPos pPos){
-
-        if(pLevel.getBiome(pPos).is(Tags.Biomes.IS_PEAK)){
-            return ModItems.TERRA_ICHOR.get();
+    public Item getSapByBiome(Level pLevel, BlockPos pPos){
+        switch (ArboraEnums.SapType.getSapByBiome(pLevel, pPos)){
+            case AERO: {
+                return ModItems.AERO_ICHOR.get();
+            }
+            case AQUA:{
+                return ModItems.AQUA_ICHOR.get();
+            }
+            case MIND:{
+                return ModItems.MIND_ICHOR.get();
+            }
+            case PURE:{
+                return ModItems.TERRA_ICHOR.get();
+            }
+            case PYRO:{
+                return ModItems.PYRO_ICHOR.get();
+            }
+            case CHAOS:{
+                return ModItems.CHAOS_ICHOR.get();
+            }
+            case CRYRO:{
+                return ModItems.CRYRO_ICHOR.get();
+            }
+            case ORDER:{
+                return ModItems.ORDER_ICHOR.get();
+            }
+            case TERRA:{
+                return ModItems.TERRA_ICHOR.get();
+            }
+            case SPIRIT:{
+                return ModItems.SPIRIT_ICHOR.get();
+            }
+            default:{
+                return ModItems.AQUA_ICHOR.get();
+            }
         }
-        if(pLevel.getBiome(pPos).is(Tags.Biomes.IS_WET_OVERWORLD)){
-            return ModItems.AQUA_ICHOR.get();
-        }
-        if(pLevel.getBiome(pPos).is(Tags.Biomes.IS_HOT_OVERWORLD)){
-            return ModItems.PYRO_ICHOR.get();
-        }
-        if(pLevel.getBiome(pPos).is(BiomeTags.IS_NETHER)){
-            return ModItems.SPIRIT_ICHOR.get();
-        }
-        if(pLevel.getBiome(pPos).is(BiomeTags.IS_END)){
-            return ModItems.MIND_ICHOR.get();
-        }
-        if(pLevel.getBiome(pPos).is(Tags.Biomes.IS_COLD_OVERWORLD)){
-            return ModItems.CRYRO_ICHOR.get();
-        }
-        if(pLevel.getBiome(pPos).is(Tags.Biomes.IS_SPARSE_OVERWORLD) || pLevel.getBiome(pPos).is(Tags.Biomes.IS_PLAINS)){
-            return ModItems.AERO_ICHOR.get();
-        }
-        if(pLevel.getBiome(pPos).is(Tags.Biomes.IS_DENSE_OVERWORLD)){
-            return ModItems.TERRA_ICHOR.get();
-        }
-        return ModItems.AQUA_ICHOR.get();
     }
     @Nullable
     @Override
@@ -147,11 +199,9 @@ public class MagicalLog extends ModFlammableRotatedPillarBock implements EntityB
         if(pLevel.isClientSide()) {
             return null;
         }
-        if(pState.getValue(AXIS) == Direction.Axis.Y) {
-            return createTickerHelper(pBlockEntityType, ModBlockEntities.MAGICAL_LOG_BE.get(),
-                    (pLevel1, pPos, pState1, pBlockEntity) -> pBlockEntity.tick(pLevel1, pPos, pState1));
-        }
-        return null;
+        return createTickerHelper(pBlockEntityType, ModBlockEntities.MAGICAL_LOG_BE.get(),
+                (pLevel1, pPos, pState1, pBlockEntity) -> pBlockEntity.tick(pLevel1, pPos, pState1));
+
     }
 
     @javax.annotation.Nullable
@@ -163,5 +213,6 @@ public class MagicalLog extends ModFlammableRotatedPillarBock implements EntityB
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         super.createBlockStateDefinition(pBuilder);
         pBuilder.add(SAP_LEVEL);
+        pBuilder.add(AXIS);
     }
 }

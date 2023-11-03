@@ -2,9 +2,11 @@ package net.fyreday.arbora.block.entity;
 
 import net.fyreday.arbora.block.ModBlocks;
 import net.fyreday.arbora.block.custom.MagicalLog;
+import net.fyreday.arbora.util.ArboraEnums;
 import net.fyreday.arbora.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
@@ -46,6 +48,9 @@ public class MagicalLogBlockEntity extends BlockEntity {
         pTag.getInt("magical_log.counter");
     }
 
+    public ArboraEnums.SapType getSapType(){
+        return ArboraEnums.SapType.getSapByBiome(this.level, worldPosition);
+    }
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
         if(dying){
             counter++;
@@ -55,7 +60,6 @@ public class MagicalLogBlockEntity extends BlockEntity {
             }
             return;
         }
-        System.out.println("I Am An Entity");
         if (pLevel.getRandom().nextDouble() < 0.01D) {
             int sapvalue = pState.getValue(MagicalLog.SAP_LEVEL);
             if (sapvalue < 5) {

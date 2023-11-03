@@ -1,8 +1,0 @@
-{
-  "parent": "block/cube_column",
-  "textures": {
-    "end": "arbora:blocks/magical_log_top",
-    "side": "arbora:blocks/magical_log",
-    "particle": "arbora:blocks/magical_log"
-  }
-}
