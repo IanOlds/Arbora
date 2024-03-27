@@ -2,7 +2,8 @@ package net.fyreday.arbora.screen;
 
 import net.fyreday.arbora.block.ModBlocks;
 import net.fyreday.arbora.block.entity.EssenceBrewingStationBlockEntity;
-import net.fyreday.arbora.recipe.EssenceBrewingRecipe;
+import net.fyreday.arbora.recipe.EssenceInfusionRecipe;
+import net.fyreday.arbora.util.BezierCurve;
 import net.fyreday.arbora.util.Location;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -13,9 +14,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
-import org.jetbrains.annotations.Nullable;
 
+import java.awt.geom.Point2D;
 import java.util.List;
+import java.util.Optional;
 
 public class EssenceBrewingMenu extends AbstractContainerMenu {
     public final EssenceBrewingStationBlockEntity blockEntity;
@@ -23,13 +25,14 @@ public class EssenceBrewingMenu extends AbstractContainerMenu {
     private final ContainerData data;
     private static final int INPUT_SLOT = 0;
     private static final int OUTPUT_SLOT = 1;
+    private static final int COMSUMTION_SLOT = 2;
     protected EssenceBrewingMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
+        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(6));
     }
 
     public EssenceBrewingMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data){
         super(ModMenuTypes.ESSENCE_BREWING_MENU.get(), pContainerId);
-        checkContainerSize(inv, 2);
+        checkContainerSize(inv, 3);
         blockEntity = ((EssenceBrewingStationBlockEntity) entity);
         this.level = inv.player.level();
         this.data = data;
@@ -38,14 +41,26 @@ public class EssenceBrewingMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
 
         this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
-            this.addSlot(new SlotItemHandler(iItemHandler, INPUT_SLOT, -40, 11));
-            this.addSlot(new SlotItemHandler(iItemHandler, OUTPUT_SLOT, -40, 59));
+            this.addSlot(new SlotItemHandler(iItemHandler, INPUT_SLOT, 142, 130));
+            this.addSlot(new SlotItemHandler(iItemHandler, OUTPUT_SLOT, 183, 130));
+            this.addSlot(new SlotItemHandler(iItemHandler, COMSUMTION_SLOT, 142, 166));
         });
-
         addDataSlots(data);
     }
     public boolean isCrafting() {
         return data.get(INPUT_SLOT) > 0;
+    }
+
+    @Override
+    public boolean clickMenuButton(Player pPlayer, int pId) {
+        if(pId == 1){
+            this.blockEntity.stir();
+        }
+        if(pId ==0){
+            this.blockEntity.grind();
+        }
+
+        return true;
     }
 
     public int getScaledProgress() {
@@ -60,8 +75,17 @@ public class EssenceBrewingMenu extends AbstractContainerMenu {
         return new Location(this.data.get(2), this.data.get(3));
     }
 
-    public List<EssenceBrewingRecipe> getAllRecipes(){
-        return this.level.getRecipeManager().getAllRecipesFor(EssenceBrewingRecipe.Type.INSTANCE);
+    public List<EssenceInfusionRecipe> getAllRecipes(){
+        return this.level.getRecipeManager().getAllRecipesFor(EssenceInfusionRecipe.Type.INSTANCE);
+    }
+    public boolean drawCurve(){
+        return getConsumptionBezier() != null;
+    }
+    public BezierCurve getConsumptionBezier(){
+        return blockEntity.getBrewingCurve();
+    }
+    public int getStirProgress(){
+        return this.blockEntity.getStiringProgress();
     }
 
     // CREDIT GOES TO: diesieben07 | https://github.com/diesieben07/SevenCommons
@@ -121,16 +145,16 @@ public class EssenceBrewingMenu extends AbstractContainerMenu {
     }
 
     private void addPlayerInventory(Inventory playerInventory) {
-        for (int i = 0; i < 3; ++i) {
-            for (int l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 84 + i * 18));
+        for (int i = 0; i < 3; i++) {
+            for (int l = 0; l < 9; l++) {
+                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, -32 + l * 18, 130 + i * 18));
             }
         }
     }
 
     private void addPlayerHotbar(Inventory playerInventory) {
         for (int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
+            this.addSlot(new Slot(playerInventory, i, -32 + i * 18, 188));
         }
     }
 }

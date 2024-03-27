@@ -1,0 +1,25 @@
+{
+  "type": "arbora:essence_brewable",
+  "ingredient":
+    {
+      "item": "minecraft:blaze_powder"
+    },
+  "vectors": [
+    {
+      "x": 0,
+      "y": 0
+    },
+    {
+      "x": 30,
+      "y": -60
+    },
+    {
+      "x": -30,
+      "y": 0
+    },
+    {
+      "x": 30,
+      "y": -30
+    }
+  ]
+}

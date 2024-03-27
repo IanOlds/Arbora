@@ -16,7 +16,7 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
-public class EssenceBrewingRecipe implements Recipe<SimpleContainer> {
+public class EssenceInfusionRecipe implements Recipe<SimpleContainer> {
 
     private final NonNullList<Ingredient> inputItems;
     private final ItemStack output;
@@ -24,7 +24,7 @@ public class EssenceBrewingRecipe implements Recipe<SimpleContainer> {
     private final int range = 3;
     private final ResourceLocation id;
 
-    public EssenceBrewingRecipe(NonNullList<Ingredient> inputItems, ItemStack output, Location location, ResourceLocation id) {
+    public EssenceInfusionRecipe(NonNullList<Ingredient> inputItems, ItemStack output, Location location, ResourceLocation id) {
         this.inputItems = inputItems;
         this.output = output;
         this.id = id;
@@ -76,32 +76,32 @@ public class EssenceBrewingRecipe implements Recipe<SimpleContainer> {
     public Location getLocation(){
         return location;
     }
-    public static class Type implements RecipeType<EssenceBrewingRecipe> {
+    public static class Type implements RecipeType<EssenceInfusionRecipe> {
         public static final Type INSTANCE = new Type();
         public static final String ID = "essence_brewing";
     }
 
-    public static class Serializer implements RecipeSerializer<EssenceBrewingRecipe>{
+    public static class Serializer implements RecipeSerializer<EssenceInfusionRecipe>{
         public static final Serializer INSTANCE = new Serializer();
         public static final ResourceLocation ID = new ResourceLocation(Arbora.MOD_ID, "essence_brewing");
         @Override
-        public EssenceBrewingRecipe fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
+        public EssenceInfusionRecipe fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
             ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pSerializedRecipe, "output"));
 
             JsonArray ingredients = GsonHelper.getAsJsonArray(pSerializedRecipe, "ingredients");
             JsonObject locObject = GsonHelper.getAsJsonObject(pSerializedRecipe, "location");
-            Location loc = new Location(GsonHelper.getAsInt(locObject, "x"), GsonHelper.getAsInt(locObject, "x"));
+            Location loc = new Location(GsonHelper.getAsInt(locObject, "x"), GsonHelper.getAsInt(locObject, "y"));
             NonNullList<Ingredient> inputs = NonNullList.withSize(1, Ingredient.EMPTY);
 
             for (int i = 0; i < inputs.size(); i++) {
                 inputs.set(i, Ingredient.fromJson(ingredients.get(i)));
             }
 
-            return new EssenceBrewingRecipe(inputs, output, loc, pRecipeId);
+            return new EssenceInfusionRecipe(inputs, output, loc, pRecipeId);
         }
 
         @Override
-        public @Nullable EssenceBrewingRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
+        public @Nullable EssenceInfusionRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
             NonNullList<Ingredient> inputs = NonNullList.withSize(pBuffer.readInt(), Ingredient.EMPTY);
 
             for (int i = 0; i < inputs.size(); i++) {
@@ -110,11 +110,11 @@ public class EssenceBrewingRecipe implements Recipe<SimpleContainer> {
             ItemStack output = pBuffer.readItem();
             int x = pBuffer.readInt();
             int y = pBuffer.readInt();
-            return new EssenceBrewingRecipe(inputs, output,new Location(x,y), pRecipeId);
+            return new EssenceInfusionRecipe(inputs, output,new Location(x,y), pRecipeId);
         }
 
         @Override
-        public void toNetwork(FriendlyByteBuf pBuffer, EssenceBrewingRecipe pRecipe) {
+        public void toNetwork(FriendlyByteBuf pBuffer, EssenceInfusionRecipe pRecipe) {
             pBuffer.writeInt(pRecipe.inputItems.size());
 
             for(Ingredient ingredient : pRecipe.getIngredients()){

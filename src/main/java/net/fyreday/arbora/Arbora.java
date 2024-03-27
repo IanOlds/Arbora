@@ -2,29 +2,21 @@ package net.fyreday.arbora;
 
 import com.mojang.logging.LogUtils;
 import net.fyreday.arbora.block.ModBlocks;
-import net.fyreday.arbora.block.custom.MagicalLog;
 import net.fyreday.arbora.block.entity.MagicalLogBlockEntity;
 import net.fyreday.arbora.block.entity.ModBlockEntities;
 import net.fyreday.arbora.item.ModCreativeModeTabs;
 import net.fyreday.arbora.item.ModItems;
 import net.fyreday.arbora.recipe.ModRecipes;
+import net.fyreday.arbora.registries.ModRegistries;
 import net.fyreday.arbora.screen.EssenceBrewingScreen;
 import net.fyreday.arbora.screen.ModMenuTypes;
-import net.fyreday.arbora.util.ArboraEnums;
 import net.fyreday.arbora.util.Util;
-import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.PanoramaRenderer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.Containers;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.RenderTypeHelper;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -37,7 +29,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.jetbrains.annotations.Nullable;
+import net.minecraftforge.registries.NewRegistryEvent;
 import org.slf4j.Logger;
 
 import java.awt.*;
@@ -62,7 +54,7 @@ public class Arbora
         ModBlockEntities.register(modEventBus);
 
         ModMenuTypes.register(modEventBus);
-
+//        ModBrewables.register(modEventBus);
         ModRecipes.register(modEventBus);
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
@@ -73,6 +65,7 @@ public class Arbora
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
+//        modEventBus.addListener(this::addArboraRegistries);
         modEventBus.addListener(this::registerBlockColorHandler);
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
@@ -100,6 +93,10 @@ public class Arbora
         if(event.getTabKey() == CreativeModeTabs.INGREDIENTS){
             event.accept(ModItems.AQUA_ICHOR);
         }
+    }
+
+    private void addArboraRegistries(NewRegistryEvent event){
+//        event.create(ModRegistries.makeRegistry(ModRegistries.Keys.BREWABLES));
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
