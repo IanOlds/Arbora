@@ -204,6 +204,9 @@ public class EssenceBrewingStationBlockEntity extends BlockEntity implements Men
             if (hasProgressFinished()) {
                 craftItem();
                 resetProgress();
+                brewingX = 0;
+                brewingY = 0;
+                this.level.sendBlockUpdated(this.worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
             }
         } else {
             resetProgress();
@@ -227,7 +230,7 @@ public class EssenceBrewingStationBlockEntity extends BlockEntity implements Men
     public void stir(){
         if(brewingCurve != null) {
             stiringProgress++;
-
+            System.out.println("x: " + getCurrentPos().getX() + " y: " + getCurrentPos().getY());
         }
     }
 
@@ -269,7 +272,11 @@ public class EssenceBrewingStationBlockEntity extends BlockEntity implements Men
         if(brewingCurve == null){
             return new Point2D.Float(0,0);
         }
-        return brewingCurve.interpolate((double)stiringProgress/stiringMaxProgress);
+        return brewingCurve.interpolate((double)stiringProgress/stiringMax);
+    }
+
+    private Location getCurrentPos(){
+        return new Location(brewingX + (int)getStiringPoint().getX(), brewingY + (int)getStiringPoint().getY());
     }
     private void craftItem() {
         Optional<EssenceInfusionRecipe> recipe = getCurrentRecipe();
@@ -301,7 +308,7 @@ public class EssenceBrewingStationBlockEntity extends BlockEntity implements Men
     }
 
     private Optional<EssenceInfusionRecipe> getCurrentRecipe() {
-        InternalLocationContainer inventory = new InternalLocationContainer(new Location(brewingX, brewingY),this.itemHandler.getSlots());
+        InternalLocationContainer inventory = new InternalLocationContainer(getCurrentPos(),this.itemHandler.getSlots());
         for (int i = 0; i < itemHandler.getSlots(); i++) {
             inventory.setItem(i, this.itemHandler.getStackInSlot(i));
         }
