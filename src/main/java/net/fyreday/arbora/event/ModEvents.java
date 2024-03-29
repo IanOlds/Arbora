@@ -1,20 +1,20 @@
 package net.fyreday.arbora.event;
 
 import net.fyreday.arbora.Arbora;
+import net.fyreday.arbora.ImbuingEffects.ImbuingEffect;
+import net.fyreday.arbora.ImbuingEffects.ImbuingEffects;
 import net.fyreday.arbora.Modifiers.ModModifiers;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.jetbrains.annotations.NotNull;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModEvents {
     @Mod.EventBusSubscriber(modid = Arbora.MOD_ID)
@@ -22,11 +22,30 @@ public class ModEvents {
         @SubscribeEvent
         public static void LivingEquipmentChangeEvent(LivingEquipmentChangeEvent event) {
             if(event.getEntity() instanceof Player player){
-                //player.sendSystemMessage(Component.literal("Equipped: ").append(event.getTo().getItem().getDescription()));
-                if(event.getTo().is(Items.DIAMOND_BOOTS) && event.getSlot() == EquipmentSlot.FEET){
-                    player.getAttribute(Attributes.MOVEMENT_SPEED).addPermanentModifier(ModModifiers.imbuedSpeed);
-                }else if(event.getFrom().is(Items.DIAMOND_BOOTS)){
-                    player.getAttribute(Attributes.MOVEMENT_SPEED).removePermanentModifier(ModModifiers.imbuedSpeed.getId());
+                if(event.getFrom().hasTag()){
+                    try {
+                        ImbuingEffect imbuingEffect = ImbuingEffects.getREGISTRY().get().getValue(new ResourceLocation(Arbora.MOD_ID,event.getFrom().getTag().getString("imbued_effect")));
+                        player.sendSystemMessage(Component.literal("effect: ").append(imbuingEffect.getAttributeId()));
+                        Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation("minecraft",imbuingEffect.getAttributeId()));
+                        player.getAttribute(attribute).removePermanentModifier(imbuingEffect.getAttributeModifierID());
+                    }catch (Exception e){
+                       // System.out.println("No old effect");
+                    }
+                }
+
+                if(event.getTo().hasTag()){
+                    try {
+                        ImbuingEffect imbuingEffect = ImbuingEffects.getREGISTRY().get().getValue(new ResourceLocation(Arbora.MOD_ID,event.getTo().getTag().getString("imbued_effect")));
+                        AttributeModifier attributeModifier = ModModifiers.getModifierFromUUID(imbuingEffect.getAttributeModifierID()).get();
+                        player.sendSystemMessage(Component.literal("effect: ").append(imbuingEffect.getAttributeId().toString()));
+                        Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation("minecraft",imbuingEffect.getAttributeId()));
+
+                        if(!player.getAttribute(attribute).hasModifier(attributeModifier)){
+                            player.getAttribute(attribute).addPermanentModifier(attributeModifier);
+                        }
+                    }catch (Exception e){
+                       // System.out.println("Failed new effect");
+                    }
                 }
             }
         }

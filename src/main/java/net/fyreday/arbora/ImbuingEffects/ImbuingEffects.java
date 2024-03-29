@@ -1,34 +1,39 @@
 package net.fyreday.arbora.ImbuingEffects;
 
 import net.fyreday.arbora.Arbora;
-import net.fyreday.arbora.registries.ModRegistries;
-import net.fyreday.arbora.util.ArboraEnums;
-import net.minecraft.Util;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.item.ArmorMaterials;
-import net.minecraft.world.item.armortrim.TrimMaterial;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.fyreday.arbora.Modifiers.ModModifiers;
 
-import java.util.Map;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.*;
+
+import java.util.function.Supplier;
 
 public class ImbuingEffects {
+    private static boolean isInitialized = false;
+    private static Supplier<IForgeRegistry<ImbuingEffect>> REGISTRY;
     public static final DeferredRegister<ImbuingEffect> IMBUINGEFFECTS =
-            DeferredRegister.create(ModRegistries.IMBUINGEFFECTS, Arbora.MOD_ID);
-    public static final RegistryObject<ImbuingEffect> SPEED = IMBUINGEFFECTS.register("imbuing_speed",
-            () -> create("imbuing_speed", MobEffects.MOVEMENT_SPEED, Map.of(),
-                    Map.of(ArboraEnums.ValidImbuingArmor.LEGS, true)));
+            DeferredRegister.create(new ResourceLocation(Arbora.MOD_ID, "imbuing_effects"), Arbora.MOD_ID);
 
-    private static ImbuingEffect create(String name, MobEffect mobEffect, Map<ArboraEnums.ValidImbuingToolType, Boolean> validTools, Map<ArboraEnums.ValidImbuingArmor, Boolean> validArmor){
-        return ImbuingEffect.create(name, mobEffect, Component.translatable(mobEffect.getDescriptionId()).withStyle(Style.EMPTY.withColor(9901575)),
-                validTools, validArmor);
+    public static final RegistryObject<ImbuingEffect> SPEED = IMBUINGEFFECTS.register("imbuing_speed", () -> new ImbuingEffect(Attributes.MOVEMENT_SPEED.getDescriptionId(),ModModifiers.imbuedSpeed.getId()));
+    public static final RegistryObject<ImbuingEffect> JUMP = IMBUINGEFFECTS.register("imbuing_health", () -> new ImbuingEffect(Attributes.MAX_HEALTH.getDescriptionId(),ModModifiers.imbuedSpeed.getId()));
+
+    public static void register(IEventBus eventBus){
+        if (isInitialized) {
+            throw new IllegalStateException("Imbuing effects already initialized");
+        }
+        REGISTRY = IMBUINGEFFECTS.makeRegistry(RegistryBuilder::new);
+        IMBUINGEFFECTS.register(eventBus);
+        isInitialized = true;
+        //LogManager.getLogManager().getLogger(Arbora.MOD_ID).info("Registered Imbuing Effects");
+        IMBUINGEFFECTS.register(eventBus);
     }
-    public static void register(IEventBus eventBus){IMBUINGEFFECTS.register(eventBus);}
+
+    public static Supplier<IForgeRegistry<ImbuingEffect>> getREGISTRY() {
+        if(!isInitialized){
+            throw new IllegalStateException("Imbuing effects are not initialized");
+        }
+        return REGISTRY;
+    }
 }

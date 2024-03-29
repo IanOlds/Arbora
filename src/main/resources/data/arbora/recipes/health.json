@@ -3,9 +3,9 @@
   "base": {
     "tag": "minecraft:trimmable_armor"
   },
-  "imbued_effect": "imbuing_speed",
+  "imbued_effect": "imbuing_health",
   "location": {
-    "x": 50,
-    "y": 50
+    "x": 0,
+    "y": 0
   }
 }

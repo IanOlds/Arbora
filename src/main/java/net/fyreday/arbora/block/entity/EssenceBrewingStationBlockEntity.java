@@ -1,7 +1,9 @@
 package net.fyreday.arbora.block.entity;
 
 import net.fyreday.arbora.recipe.BrewableRecipe;
+import net.fyreday.arbora.recipe.EssenceImbuingRecipe;
 import net.fyreday.arbora.recipe.EssenceInfusionRecipe;
+import net.fyreday.arbora.recipe.LocationRecipe;
 import net.fyreday.arbora.screen.EssenceBrewingMenu;
 import net.fyreday.arbora.util.BezierCurve;
 import net.fyreday.arbora.util.InternalLocationContainer;
@@ -198,16 +200,16 @@ public class EssenceBrewingStationBlockEntity extends BlockEntity implements Men
         }
         if (hasRecipe()) {
 
-            increaseCraftingProcess();
+//            increaseCraftingProcess();
             setChanged(pLevel, pPos, pState);
 
-            if (hasProgressFinished()) {
+//            if (hasProgressFinished()) {
                 craftItem();
                 resetProgress();
                 brewingX = 0;
                 brewingY = 0;
                 this.level.sendBlockUpdated(this.worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
-            }
+//            }
         } else {
             resetProgress();
             InternalLocationContainer inventory = new InternalLocationContainer(new Location(brewingX, brewingY), this.itemHandler.getSlots());
@@ -230,7 +232,7 @@ public class EssenceBrewingStationBlockEntity extends BlockEntity implements Men
     public void stir(){
         if(brewingCurve != null) {
             stiringProgress++;
-            System.out.println("x: " + getCurrentPos().getX() + " y: " + getCurrentPos().getY());
+            //System.out.println("x: " + getCurrentPos().getX() + " y: " + getCurrentPos().getY());
         }
     }
 
@@ -279,11 +281,23 @@ public class EssenceBrewingStationBlockEntity extends BlockEntity implements Men
         return new Location(brewingX + (int)getStiringPoint().getX(), brewingY + (int)getStiringPoint().getY());
     }
     private void craftItem() {
-        Optional<EssenceInfusionRecipe> recipe = getCurrentRecipe();
-        ItemStack result = recipe.get().getResultItem(null);
+        Optional<LocationRecipe> recipe = getCurrentRecipe();
+
+        ItemStack result = getResultItem(recipe.get());
+
         this.itemHandler.extractItem(INPUT_SLOT, 1, false);
-        this.itemHandler.setStackInSlot(OUTPUT_SLOT, new ItemStack(result.getItem(),
-                this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount()));
+
+        if(recipe.get() instanceof EssenceImbuingRecipe){
+            this.itemHandler.setStackInSlot(OUTPUT_SLOT, result);
+            try {
+                System.out.println("Item tag output: "+ this.itemHandler.getStackInSlot(1).getTag().getUUID("imbued_effect"));
+            }catch (Exception e){
+                System.out.println("Failed on output");
+            }
+        }else{
+            this.itemHandler.setStackInSlot(OUTPUT_SLOT, new ItemStack(result.getItem(),
+                    this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount()));
+        }
     }
 
     private void resetProgress() {
@@ -299,15 +313,33 @@ public class EssenceBrewingStationBlockEntity extends BlockEntity implements Men
     }
 
     private boolean hasRecipe() {
-        Optional<EssenceInfusionRecipe> recipe = getCurrentRecipe();
+        Optional<LocationRecipe> recipe = getCurrentRecipe();
         if(recipe.isEmpty()){
             return false;
         }
-        ItemStack result = recipe.get().getResultItem(null);
+        ItemStack result = getResultItem(recipe.get());
         return canInsertAmountIntoOutputSlot(result.getCount()) && canInsertItemIntoOutputSlot(result.getItem());
     }
 
-    private Optional<EssenceInfusionRecipe> getCurrentRecipe() {
+    private ItemStack getResultItem(LocationRecipe recipe){
+        ItemStack result = null;
+        if(recipe instanceof EssenceInfusionRecipe essenceInfusionRecipe){
+            System.out.println("Infusion");
+            result = essenceInfusionRecipe.getResultItem(null);
+        }
+        if(recipe instanceof EssenceImbuingRecipe essenceImbuingRecipe){
+            System.out.println("Imbuing");
+            InternalLocationContainer inventory = new InternalLocationContainer(getCurrentPos(),this.itemHandler.getSlots());
+            for (int i = 0; i < itemHandler.getSlots(); i++) {
+                inventory.setItem(i, this.itemHandler.getStackInSlot(i));
+            }
+            result = essenceImbuingRecipe.assemble(inventory, null);
+        }
+
+        return result;
+    }
+
+    private Optional<LocationRecipe> getCurrentRecipe() {
         InternalLocationContainer inventory = new InternalLocationContainer(getCurrentPos(),this.itemHandler.getSlots());
         for (int i = 0; i < itemHandler.getSlots(); i++) {
             inventory.setItem(i, this.itemHandler.getStackInSlot(i));
@@ -315,8 +347,15 @@ public class EssenceBrewingStationBlockEntity extends BlockEntity implements Men
 //        for (EssenceBrewingRecipe essenceBrewingRecipe : this.level.getRecipeManager().getAllRecipesFor(EssenceBrewingRecipe.Type.INSTANCE)){
 //            System.out.println(essenceBrewingRecipe.getResultItem(null));
 //        }
-
-        return this.level.getRecipeManager().getRecipeFor(EssenceInfusionRecipe.Type.INSTANCE, inventory, level);
+        Optional<EssenceInfusionRecipe> infusionRecipe = this.level.getRecipeManager().getRecipeFor(EssenceInfusionRecipe.Type.INSTANCE, inventory, level);
+        if(infusionRecipe.isPresent()){
+            return Optional.of(infusionRecipe.get());
+        }
+        Optional<EssenceImbuingRecipe> imbuingRecipe = this.level.getRecipeManager().getRecipeFor(EssenceImbuingRecipe.Type.INSTANCE, inventory, level);
+        if(imbuingRecipe.isPresent()){
+            return Optional.of(imbuingRecipe.get());
+        }
+        return Optional.empty();
     }
 
     private boolean canInsertItemIntoOutputSlot(Item item) {

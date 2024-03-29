@@ -75,6 +75,7 @@ public class EssenceBrewingMenu extends AbstractContainerMenu {
     }
 
     public Location getLocation() {
+        //System.out.println("size: " + getAllRecipes().size());
         return new Location(this.data.get(2), this.data.get(3));
     }
 

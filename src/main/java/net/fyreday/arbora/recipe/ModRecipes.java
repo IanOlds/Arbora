@@ -13,8 +13,8 @@ public class ModRecipes {
 
     public static final RegistryObject<RecipeSerializer<EssenceInfusionRecipe>> ESSENCE_BREWING_SERIALIZER =
             SERIALIZERS.register("essence_brewing", () -> EssenceInfusionRecipe.Serializer.INSTANCE);
-//    public static final RegistryObject<RecipeSerializer<EssenceImbuingRecipe>> ESSENCE_IMBUING_SERIALIZER =
-//            SERIALIZERS.register("essence_imbuing", () -> EssenceImbuingRecipe.Serializer.INSTANCE);
+    public static final RegistryObject<RecipeSerializer<EssenceImbuingRecipe>> ESSENCE_IMBUING_SERIALIZER =
+            SERIALIZERS.register("essence_imbuing", () -> EssenceImbuingRecipe.Serializer.INSTANCE);
     public static final RegistryObject<RecipeSerializer<BrewableRecipe>> ESSENCE_BREWABLE_SERIALIZER =
             SERIALIZERS.register("essence_brewable", () -> BrewableRecipe.Serializer.INSTANCE);
     public static void register(IEventBus eventBus) {

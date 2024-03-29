@@ -1,6 +1,7 @@
 package net.fyreday.arbora;
 
 import com.mojang.logging.LogUtils;
+import net.fyreday.arbora.ImbuingEffects.ImbuingEffects;
 import net.fyreday.arbora.block.ModBlocks;
 import net.fyreday.arbora.block.entity.MagicalLogBlockEntity;
 import net.fyreday.arbora.block.entity.ModBlockEntities;
@@ -46,6 +47,7 @@ public class Arbora
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        ImbuingEffects.register(modEventBus);
         ModCreativeModeTabs.register(modEventBus);
 
         ModItems.register(modEventBus);
@@ -54,7 +56,7 @@ public class Arbora
         ModBlockEntities.register(modEventBus);
 
         ModMenuTypes.register(modEventBus);
-//        ModBrewables.register(modEventBus);
+
         ModRecipes.register(modEventBus);
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
@@ -97,7 +99,6 @@ public class Arbora
 
     @SubscribeEvent
     public void onNewRegistry(NewRegistryEvent event) {
-        event.create(ModRegistries.makeRegistry(ModRegistries.Keys.IMBUINGEFFECTS));
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

@@ -17,21 +17,21 @@ import net.minecraftforge.registries.RegistryManager;
 
 public class ModRegistries {
 
-    public class Keys {
-        public static final ResourceKey<Registry<ImbuingEffect>> IMBUINGEFFECTS = key("arboraImbuingEffects");
-    }
-    private static final int MAX_VARINT = Integer.MAX_VALUE - 1;
-
-    public static <T> RegistryBuilder<T> makeRegistry(ResourceKey<? extends Registry<T>> key)
-    {
-        return new RegistryBuilder<T>().setName(key.location()).setMaxID(MAX_VARINT);
-    }
-
-    private static <T> ResourceKey<Registry<T>> key(String name)
-    {
-        return ResourceKey.createRegistryKey(new ResourceLocation(name));
-    }
-
-    public static final IForgeRegistry<ImbuingEffect> IMBUINGEFFECTS = RegistryManager.ACTIVE.getRegistry(Keys.IMBUINGEFFECTS);
+//    public class Keys {
+//        public static final ResourceKey<Registry<ImbuingEffect>> IMBUINGEFFECTS = key("arboraImbuingEffects");
+//    }
+//    private static final int MAX_VARINT = Integer.MAX_VALUE - 1;
+//
+//    public static <T> RegistryBuilder<T> makeRegistry(ResourceKey<? extends Registry<T>> key)
+//    {
+//        return new RegistryBuilder<T>().setName(key.location()).setMaxID(MAX_VARINT);
+//    }
+//
+//    private static <T> ResourceKey<Registry<T>> key(String name)
+//    {
+//        return ResourceKey.createRegistryKey(new ResourceLocation(name));
+//    }
+//
+//
 
 }
