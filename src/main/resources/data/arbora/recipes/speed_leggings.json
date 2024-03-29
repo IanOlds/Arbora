@@ -1,0 +1,13 @@
+{
+  "type": "arbora:essence_imbuing",
+  "base": {
+    "tag": "minecraft:trimmable_armor"
+  },
+  "effect": {
+    "imbuingEffect": "imbuing_speed"
+  },
+  "location": {
+    "x": 50,
+    "y": 50
+  }
+}

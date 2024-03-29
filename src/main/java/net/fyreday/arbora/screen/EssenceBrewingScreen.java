@@ -3,6 +3,7 @@ package net.fyreday.arbora.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fyreday.arbora.Arbora;
 import net.fyreday.arbora.recipe.EssenceInfusionRecipe;
+import net.fyreday.arbora.recipe.LocationRecipe;
 import net.fyreday.arbora.util.ArboraEnums;
 import net.fyreday.arbora.util.BezierCurve;
 import net.fyreday.arbora.util.Location;
@@ -70,7 +71,7 @@ public class EssenceBrewingScreen extends AbstractContainerScreen<EssenceBrewing
 
 
         renderLocation(guiGraphics, x+5, y+5, 246, 165);
-        for(EssenceInfusionRecipe recipe : menu.getAllRecipes()){
+        for(LocationRecipe recipe : menu.getAllRecipes()){
             renderRecipe(guiGraphics, x+5, y+5, recipe);
         }
         renderProgressArrow(guiGraphics, x, y);
@@ -105,7 +106,7 @@ public class EssenceBrewingScreen extends AbstractContainerScreen<EssenceBrewing
 //            guiGraphics.hLine((int)point.getX() + x, (int)point.getX()+x, (int)point.getY() + y, 0xFFFF0000);
 //        }
     }
-    private void renderRecipe(GuiGraphics guiGraphics, int x, int y, EssenceInfusionRecipe recipe){
+    private void renderRecipe(GuiGraphics guiGraphics, int x, int y, LocationRecipe recipe){
         Location loc = recipe.getLocation();
         Location menuLoc = menu.getLocation();
 

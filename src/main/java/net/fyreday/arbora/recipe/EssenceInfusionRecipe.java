@@ -16,19 +16,18 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
-public class EssenceInfusionRecipe implements Recipe<SimpleContainer> {
+public class EssenceInfusionRecipe extends LocationRecipe implements Recipe<SimpleContainer> {
 
     private final NonNullList<Ingredient> inputItems;
     private final ItemStack output;
-    private final Location location;
-    private final int range = 3;
+    private final int range = 10;
     private final ResourceLocation id;
 
     public EssenceInfusionRecipe(NonNullList<Ingredient> inputItems, ItemStack output, Location location, ResourceLocation id) {
+        super(location);
         this.inputItems = inputItems;
         this.output = output;
         this.id = id;
-        this.location = location;
     }
 
     @Override
@@ -40,7 +39,7 @@ public class EssenceInfusionRecipe implements Recipe<SimpleContainer> {
             return false;
         }
         InternalLocationContainer inv = (InternalLocationContainer) pContainer;
-        return inputItems.get(0).test(inv.getItem(0)) && inv.getLocation().inRectRange(this.location.getX(), this.location.getY(), range);
+        return inputItems.get(0).test(inv.getItem(0)) && inv.getLocation().inRectRange(this.getLocation().getX(), this.getLocation().getY(), range);
     }
 
     @Override
@@ -73,9 +72,6 @@ public class EssenceInfusionRecipe implements Recipe<SimpleContainer> {
         return Type.INSTANCE;
     }
 
-    public Location getLocation(){
-        return location;
-    }
     public static class Type implements RecipeType<EssenceInfusionRecipe> {
         public static final Type INSTANCE = new Type();
         public static final String ID = "essence_brewing";
@@ -121,8 +117,8 @@ public class EssenceInfusionRecipe implements Recipe<SimpleContainer> {
                 ingredient.toNetwork(pBuffer);
             }
             pBuffer.writeItemStack(pRecipe.getResultItem(null), false);
-            pBuffer.writeInt(pRecipe.location.getX());
-            pBuffer.writeInt(pRecipe.location.getY());
+            pBuffer.writeInt(pRecipe.getLocation().getX());
+            pBuffer.writeInt(pRecipe.getLocation().getY());
         }
     }
 }

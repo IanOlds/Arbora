@@ -95,8 +95,9 @@ public class Arbora
         }
     }
 
-    private void addArboraRegistries(NewRegistryEvent event){
-//        event.create(ModRegistries.makeRegistry(ModRegistries.Keys.BREWABLES));
+    @SubscribeEvent
+    public void onNewRegistry(NewRegistryEvent event) {
+        event.create(ModRegistries.makeRegistry(ModRegistries.Keys.IMBUINGEFFECTS));
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

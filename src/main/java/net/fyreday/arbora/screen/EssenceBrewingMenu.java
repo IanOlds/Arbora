@@ -2,7 +2,9 @@ package net.fyreday.arbora.screen;
 
 import net.fyreday.arbora.block.ModBlocks;
 import net.fyreday.arbora.block.entity.EssenceBrewingStationBlockEntity;
+import net.fyreday.arbora.recipe.EssenceImbuingRecipe;
 import net.fyreday.arbora.recipe.EssenceInfusionRecipe;
+import net.fyreday.arbora.recipe.LocationRecipe;
 import net.fyreday.arbora.util.BezierCurve;
 import net.fyreday.arbora.util.Location;
 import net.minecraft.network.FriendlyByteBuf;
@@ -16,6 +18,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,8 +78,14 @@ public class EssenceBrewingMenu extends AbstractContainerMenu {
         return new Location(this.data.get(2), this.data.get(3));
     }
 
-    public List<EssenceInfusionRecipe> getAllRecipes(){
-        return this.level.getRecipeManager().getAllRecipesFor(EssenceInfusionRecipe.Type.INSTANCE);
+    public List<LocationRecipe> getAllRecipes(){
+        List<EssenceInfusionRecipe> infusionRecipes = this.level.getRecipeManager().getAllRecipesFor(EssenceInfusionRecipe.Type.INSTANCE);
+        List<EssenceImbuingRecipe> imbuingRecipes = this.level.getRecipeManager().getAllRecipesFor(EssenceImbuingRecipe.Type.INSTANCE);
+
+        List<LocationRecipe> recipes = new ArrayList<>();
+        recipes.addAll(infusionRecipes);
+        recipes.addAll(imbuingRecipes);
+        return recipes;
     }
     public boolean drawCurve(){
         return getConsumptionBezier() != null;
