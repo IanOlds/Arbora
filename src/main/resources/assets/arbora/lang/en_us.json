@@ -8,8 +8,10 @@
   "item.arbora.pyro_ichor_bottle" : "Pyro-Ichor Bottle",
   "item.arbora.spirit_ichor_bottle" : "Spirit-Ichor Bottle",
   "item.arbora.terra_ichor_bottle" : "Terra-Ichor Bottle",
+  "item.arbora.terra_essence_bucket" : "Terra-Essence Bucket",
 
   "block.arbora.magical_log": "Magical Log",
+  "block.arbora.magical_log_dead": "Dead Magical Log",
   "block.arbora.magical_wood": "Magical Wood",
   "block.arbora.stripped_magical_log": "Stripped Magical Log",
   "block.arbora.stripped_magical_wood": "Stripped Magical Wood",
@@ -17,6 +19,7 @@
   "block.arbora.magical_planks": "Magical Planks",
   "block.arbora.magical_leaves": "Magical Leaves",
   "block.arbora.magical_sapling": "Magical Sapling",
+
 
   "block.arbora.essence_brewing_station": "Essence Brewing Station",
   "creativetab.arbora_tab" : "Arbora Tab",

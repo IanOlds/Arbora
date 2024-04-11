@@ -5,6 +5,8 @@ import net.fyreday.arbora.ImbuingEffects.ImbuingEffects;
 import net.fyreday.arbora.block.ModBlocks;
 import net.fyreday.arbora.block.entity.MagicalLogBlockEntity;
 import net.fyreday.arbora.block.entity.ModBlockEntities;
+import net.fyreday.arbora.fluid.ModFluidTypes;
+import net.fyreday.arbora.fluid.ModFluids;
 import net.fyreday.arbora.item.ModCreativeModeTabs;
 import net.fyreday.arbora.item.ModItems;
 import net.fyreday.arbora.recipe.ModRecipes;
@@ -53,6 +55,8 @@ public class Arbora
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
 
+        ModFluids.register(modEventBus);
+        ModFluidTypes.register(modEventBus);
         ModBlockEntities.register(modEventBus);
 
         ModMenuTypes.register(modEventBus);
@@ -118,6 +122,8 @@ public class Arbora
         {
             MenuScreens.register(ModMenuTypes.ESSENCE_BREWING_MENU.get(), EssenceBrewingScreen::new);
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.MAGICAL_LOG.get(), RenderType.cutoutMipped());
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_TERRA_ESSENCE.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_TERRA_ESSENCE.get(), RenderType.translucent());
         }
 
 

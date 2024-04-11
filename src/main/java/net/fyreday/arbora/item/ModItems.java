@@ -1,7 +1,9 @@
 package net.fyreday.arbora.item;
 
 import net.fyreday.arbora.Arbora;
+import net.fyreday.arbora.fluid.ModFluids;
 import net.fyreday.arbora.item.custom.MetalDetectorItem;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -21,6 +23,8 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> TERRA_ICHOR = ITEMS.register("terra_ichor_bottle",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> TERRA_ESSENCE_BUCKET = ITEMS.register("terra_essence_bucket",
+            () -> new BucketItem(ModFluids.SOURCE_TERRA_ESSENCE, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
     public static final RegistryObject<Item> CRYRO_ICHOR = ITEMS.register("cryro_ichor_bottle",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> CHAOS_ICHOR = ITEMS.register("chaos_ichor_bottle",

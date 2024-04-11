@@ -33,7 +33,7 @@ public class ModEvents {
                     }
                 }
 
-                if(event.getTo().hasTag()){
+                if(event.getTo().hasTag()){  
                     try {
                         ImbuingEffect imbuingEffect = ImbuingEffects.getREGISTRY().get().getValue(new ResourceLocation(Arbora.MOD_ID,event.getTo().getTag().getString("imbued_effect")));
                         AttributeModifier attributeModifier = ModModifiers.getModifierFromUUID(imbuingEffect.getAttributeModifierID()).get();

@@ -82,6 +82,8 @@ public class EssenceBrewingStationBlockEntity extends BlockEntity implements Men
                    case 3 -> EssenceBrewingStationBlockEntity.this.brewingY + (int)getStiringPoint().getY();
                    case 4 -> EssenceBrewingStationBlockEntity.this.stiringProgress;
                    case 5 -> EssenceBrewingStationBlockEntity.this.stiringMaxProgress;
+                   case 6 -> (int)getStiringPoint().getX();
+                   case 7 -> (int)getStiringPoint().getY();
                     default -> 0;
                 };
             }
@@ -100,7 +102,7 @@ public class EssenceBrewingStationBlockEntity extends BlockEntity implements Men
 
             @Override
             public int getCount() {
-                return 6;
+                return 8;
             }
         };
     }
@@ -183,7 +185,7 @@ public class EssenceBrewingStationBlockEntity extends BlockEntity implements Men
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-        if (stiringProgress > 0) {
+        if (stiringProgress > 0 && brewingCurve != null) {
 
             if (stiringProgress > stiringMaxProgress) {
                 brewingX = brewingX + (int)getStiringPoint().getX();
@@ -289,11 +291,6 @@ public class EssenceBrewingStationBlockEntity extends BlockEntity implements Men
 
         if(recipe.get() instanceof EssenceImbuingRecipe){
             this.itemHandler.setStackInSlot(OUTPUT_SLOT, result);
-            try {
-                System.out.println("Item tag output: "+ this.itemHandler.getStackInSlot(1).getTag().getUUID("imbued_effect"));
-            }catch (Exception e){
-                System.out.println("Failed on output");
-            }
         }else{
             this.itemHandler.setStackInSlot(OUTPUT_SLOT, new ItemStack(result.getItem(),
                     this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount()));

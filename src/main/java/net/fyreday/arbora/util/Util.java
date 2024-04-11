@@ -2,6 +2,7 @@ package net.fyreday.arbora.util;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
+import org.joml.Vector3f;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -48,9 +49,13 @@ public class Util {
         int r = c.getRed();
         int g = c.getGreen();
         int b = c.getBlue();
+        a <<= 24;
         r <<= 16; //shift 16 bits left
         g <<= 8;//shift 8 bits left
-        rbgByBytes = r | g | b; // OR operator all 3 channels.
+        rbgByBytes = a | r | g | b; // OR operator all 3 channels.
         return rbgByBytes;
+    }
+    public static Vector3f getVectorFromColor(Color c){
+        return new Vector3f(c.getRed(),c.getGreen(),c.getGreen());
     }
 }

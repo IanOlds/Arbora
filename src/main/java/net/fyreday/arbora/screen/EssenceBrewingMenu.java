@@ -7,6 +7,7 @@ import net.fyreday.arbora.recipe.EssenceInfusionRecipe;
 import net.fyreday.arbora.recipe.LocationRecipe;
 import net.fyreday.arbora.util.BezierCurve;
 import net.fyreday.arbora.util.Location;
+import net.fyreday.arbora.util.Vector2D;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -26,11 +27,15 @@ public class EssenceBrewingMenu extends AbstractContainerMenu {
     public final EssenceBrewingStationBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
+    private double oldx = 0;
+    private double oldy = 0;
+    private static final int stirButtonId = 1;
+    private static final int grindButtonId = 0;
     private static final int INPUT_SLOT = 0;
     private static final int OUTPUT_SLOT = 1;
     private static final int COMSUMTION_SLOT = 2;
     protected EssenceBrewingMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(6));
+        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(8));
     }
 
     public EssenceBrewingMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data){
@@ -56,8 +61,9 @@ public class EssenceBrewingMenu extends AbstractContainerMenu {
 
     @Override
     public boolean clickMenuButton(Player pPlayer, int pId) {
+        System.out.println("menu click");
         if(pId == 1){
-            this.blockEntity.stir();
+            this.data.set(4,this.data.get(4)+1);
         }
         if(pId ==0){
             this.blockEntity.grind();
@@ -78,6 +84,9 @@ public class EssenceBrewingMenu extends AbstractContainerMenu {
         //System.out.println("size: " + getAllRecipes().size());
         return new Location(this.data.get(2), this.data.get(3));
     }
+    public Vector2D getStiringMovement(){
+        return new Vector2D(this.data.get(6), this.data.get(7));
+    }
 
     public List<LocationRecipe> getAllRecipes(){
         List<EssenceInfusionRecipe> infusionRecipes = this.level.getRecipeManager().getAllRecipesFor(EssenceInfusionRecipe.Type.INSTANCE);
@@ -95,7 +104,26 @@ public class EssenceBrewingMenu extends AbstractContainerMenu {
         return blockEntity.getBrewingCurve();
     }
     public int getStirProgress(){
-        return this.blockEntity.getStiringProgress();
+        return this.data.get(4);
+    }
+    public int getStiringMaxProgress(){
+        return this.data.get(5);
+    }
+
+    public boolean isStired(double newx, int id){
+        System.out.println();
+        if(id == stirButtonId && Math.abs(newx-oldx) > 3 ){
+            oldx = newx;
+            return true;
+        }
+        return false;
+    }
+    public boolean isGrind(double newy, int id){
+        if(id == grindButtonId && Math.abs(newy-oldy) > 3 ){
+            oldy = newy;
+            return true;
+        }
+        return false;
     }
 
     // CREDIT GOES TO: diesieben07 | https://github.com/diesieben07/SevenCommons

@@ -4,6 +4,7 @@ import net.fyreday.arbora.Arbora;
 import net.fyreday.arbora.block.custom.EssenceBrewingStationBlock;
 import net.fyreday.arbora.block.custom.MagicalLog;
 import net.fyreday.arbora.block.custom.ModFlammableRotatedPillarBock;
+import net.fyreday.arbora.fluid.ModFluids;
 import net.fyreday.arbora.item.ModItems;
 import net.fyreday.arbora.worldgen.tree.MagicalTreeGrower;
 import net.minecraft.core.BlockPos;
@@ -11,10 +12,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LeavesBlock;
-import net.minecraft.world.level.block.SaplingBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.grower.OakTreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -73,6 +71,9 @@ public class ModBlocks {
                     return 30;
                 }
             });
+
+    public static final RegistryObject<LiquidBlock> TERRA_ESSENCE_FLUID_BLOCK = BLOCKS.register("terra_essence_fluid_block",
+            () -> new LiquidBlock(ModFluids.SOURCE_TERRA_ESSENCE, BlockBehaviour.Properties.copy(Blocks.WATER)));
     public static final RegistryObject<Block> MAGICAL_SAPLING = registerBlock("magical_sapling",
             () -> new SaplingBlock(new MagicalTreeGrower(),BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
     public static final RegistryObject<Block> ESSENCE_BREWING_STATION = registerBlock("essence_brewing_station",
