@@ -230,17 +230,6 @@ public class EssenceBrewingStationBlockEntity extends BlockEntity implements Men
         brewingCurve = recipe.getBrewPath();
         this.level.sendBlockUpdated(this.worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
     }
-
-    public void stir(){
-        if(brewingCurve != null) {
-            stiringProgress++;
-            //System.out.println("x: " + getCurrentPos().getX() + " y: " + getCurrentPos().getY());
-        }
-    }
-
-    public int getStiringProgress(){
-        return stiringProgress;
-    }
     public void grind(){
         if(stiringMaxProgress <= stiringMax) {
             stiringMaxProgress++;

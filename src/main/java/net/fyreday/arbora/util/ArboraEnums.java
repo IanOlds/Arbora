@@ -21,8 +21,8 @@ public class ArboraEnums {
         AERO("aero", new Color(203, 255, 24, 255)),
         PYRO("pyro",new Color(255, 81, 0)),
         CRYRO("cryro",new Color(0, 255, 255)),
-        AQUA("aqua",new Color(0, 99, 248)),
-        CHAOS("chaos",new Color(88, 40, 0)),
+        AQUA("aqua",new Color(84, 149, 255)),
+        CHAOS("chaos",new Color(45, 37, 37)),
         ORDER("order",new Color(162, 201, 197)),
         MIND("mind",new Color(200, 0, 255)),
         SPIRIT("spirit",new Color(242, 171, 255));

@@ -11,6 +11,7 @@ import net.fyreday.arbora.item.ModCreativeModeTabs;
 import net.fyreday.arbora.item.ModItems;
 import net.fyreday.arbora.recipe.ModRecipes;
 import net.fyreday.arbora.registries.ModRegistries;
+import net.fyreday.arbora.screen.DistillScreen;
 import net.fyreday.arbora.screen.EssenceBrewingScreen;
 import net.fyreday.arbora.screen.ModMenuTypes;
 import net.fyreday.arbora.util.Util;
@@ -121,9 +122,38 @@ public class Arbora
         public static void onClientSetup(FMLClientSetupEvent event)
         {
             MenuScreens.register(ModMenuTypes.ESSENCE_BREWING_MENU.get(), EssenceBrewingScreen::new);
+            MenuScreens.register(ModMenuTypes.DISTILLING_MENU.get(), DistillScreen::new);
+
+
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.MAGICAL_LOG.get(), RenderType.cutoutMipped());
+
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_AQUA_ESSENCE.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_AQUA_ESSENCE.get(), RenderType.translucent());
+
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_AERO_ESSENCE.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_AERO_ESSENCE.get(), RenderType.translucent());
+
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_CRYRO_ESSENCE.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_CRYRO_ESSENCE.get(), RenderType.translucent());
+
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_PYRO_ESSENCE.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_PYRO_ESSENCE.get(), RenderType.translucent());
+
             ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_TERRA_ESSENCE.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_TERRA_ESSENCE.get(), RenderType.translucent());
+
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_CHAOS_ESSENCE.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_CHAOS_ESSENCE.get(), RenderType.translucent());
+
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_MIND_ESSENCE.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_MIND_ESSENCE.get(), RenderType.translucent());
+
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_ORDER_ESSENCE.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_ORDER_ESSENCE.get(), RenderType.translucent());
+
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_SPIRIT_ESSENCE.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_SPIRIT_ESSENCE.get(), RenderType.translucent());
+
         }
 
 

@@ -1,0 +1,16 @@
+{
+  "type": "arbora:distilling",
+  "outputs": [
+    {
+      "count": 1,
+      "item": "minecraft:magma_cream"
+    },
+    {
+      "count": 1,
+      "item": "minecraft:slime_ball"
+    }
+  ],
+  "ingredient": {
+    "item": "minecraft:blaze_powder"
+  }
+}

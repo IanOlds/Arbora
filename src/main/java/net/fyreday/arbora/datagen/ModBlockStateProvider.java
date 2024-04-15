@@ -10,9 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.block.SaplingBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -48,6 +46,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
         flatBlockItem(ModBlocks.MAGICAL_SAPLING);
         simpleBlockWithItem(ModBlocks.ESSENCE_BREWING_STATION.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/essence_brewing_station")));
+
+        myFurnaceBlock((AbstractFurnaceBlock) ModBlocks.ARBORIC_DISTILLER.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/arboric_distiller")),
+                new ModelFile.UncheckedModelFile(modLoc("block/infusion_cauldren")));
     }
 
     private void leavesBlock(RegistryObject<Block> blockRegistryObject) {
@@ -120,6 +122,27 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 .modelForState().modelFile(horizontal).rotationX(90).rotationY(90).addModel()
                 .partialState().with(MagicalLog.AXIS, Direction.Axis.X).with(MagicalLog.SAP_LEVEL, 5)
                 .modelForState().modelFile(new ModelFile.UncheckedModelFile(modLoc("block/magical_log_horizontal_sap"))).rotationX(90).rotationY(90).addModel();
+    }
+
+    private void myFurnaceBlock(AbstractFurnaceBlock block, ModelFile unlit, ModelFile lit){
+        getVariantBuilder(block)
+                .partialState().with(AbstractFurnaceBlock.FACING, Direction.NORTH).with(AbstractFurnaceBlock.LIT, false)
+                .modelForState().modelFile(unlit).addModel()
+                .partialState().with(AbstractFurnaceBlock.FACING, Direction.EAST).with(AbstractFurnaceBlock.LIT, false)
+                .modelForState().modelFile(unlit).rotationY(90).addModel()
+                .partialState().with(AbstractFurnaceBlock.FACING, Direction.SOUTH).with(AbstractFurnaceBlock.LIT, false)
+                .modelForState().modelFile(unlit).rotationY(180).addModel()
+                .partialState().with(AbstractFurnaceBlock.FACING, Direction.WEST).with(AbstractFurnaceBlock.LIT, false)
+                .modelForState().modelFile(unlit).rotationY(270).addModel()
+                .partialState().with(AbstractFurnaceBlock.FACING, Direction.NORTH).with(AbstractFurnaceBlock.LIT, true)
+                .modelForState().modelFile(lit).addModel()
+                .partialState().with(AbstractFurnaceBlock.FACING, Direction.EAST).with(AbstractFurnaceBlock.LIT, true)
+                .modelForState().modelFile(lit).rotationY(90).addModel()
+                .partialState().with(AbstractFurnaceBlock.FACING, Direction.SOUTH).with(AbstractFurnaceBlock.LIT, true)
+                .modelForState().modelFile(lit).rotationY(180).addModel()
+                .partialState().with(AbstractFurnaceBlock.FACING, Direction.WEST).with(AbstractFurnaceBlock.LIT, true)
+                .modelForState().modelFile(lit).rotationY(270).addModel();
+        simpleBlockItem(block, unlit);
     }
     private String name(Block block) {
         return key(block).getPath();

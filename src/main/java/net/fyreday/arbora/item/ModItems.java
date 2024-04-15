@@ -23,8 +23,6 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> TERRA_ICHOR = ITEMS.register("terra_ichor_bottle",
             () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> TERRA_ESSENCE_BUCKET = ITEMS.register("terra_essence_bucket",
-            () -> new BucketItem(ModFluids.SOURCE_TERRA_ESSENCE, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
     public static final RegistryObject<Item> CRYRO_ICHOR = ITEMS.register("cryro_ichor_bottle",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> CHAOS_ICHOR = ITEMS.register("chaos_ichor_bottle",
@@ -35,6 +33,28 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> MIND_ICHOR = ITEMS.register("mind_ichor_bottle",
             () -> new Item(new Item.Properties()));
+
+
+    public static final RegistryObject<Item> AQUA_ESSENCE_BUCKET = ITEMS.register("aqua_essence_bucket",
+            () -> new BucketItem(ModFluids.SOURCE_AQUA_ESSENCE, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> AERO_ESSENCE_BUCKET = ITEMS.register("aero_essence_bucket",
+            () -> new BucketItem(ModFluids.SOURCE_AERO_ESSENCE, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> CRYRO_ESSENCE_BUCKET = ITEMS.register("cryro_essence_bucket",
+            () -> new BucketItem(ModFluids.SOURCE_CRYRO_ESSENCE, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> PYRO_ESSENCE_BUCKET = ITEMS.register("pyro_essence_bucket",
+            () -> new BucketItem(ModFluids.SOURCE_PYRO_ESSENCE, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> TERRA_ESSENCE_BUCKET = ITEMS.register("terra_essence_bucket",
+            () -> new BucketItem(ModFluids.SOURCE_TERRA_ESSENCE, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> CHAOS_ESSENCE_BUCKET = ITEMS.register("chaos_essence_bucket",
+            () -> new BucketItem(ModFluids.SOURCE_CHAOS_ESSENCE, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> MIND_ESSENCE_BUCKET = ITEMS.register("mind_essence_bucket",
+            () -> new BucketItem(ModFluids.SOURCE_MIND_ESSENCE, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> ORDER_ESSENCE_BUCKET = ITEMS.register("order_essence_bucket",
+            () -> new BucketItem(ModFluids.SOURCE_ORDER_ESSENCE, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final RegistryObject<Item> SPIRIT_ESSENCE_BUCKET = ITEMS.register("spirit_essence_bucket",
+            () -> new BucketItem(ModFluids.SOURCE_SPIRIT_ESSENCE, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+
+
 
     public static final RegistryObject<Item> METAL_DETECTOR = ITEMS.register("metal_detector",
             () -> new MetalDetectorItem(new Item.Properties().durability(100)));

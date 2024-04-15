@@ -16,6 +16,9 @@ public class ModMenuTypes {
 
     public static final RegistryObject<MenuType<EssenceBrewingMenu>> ESSENCE_BREWING_MENU =
             registerMenuType("essence_brewing_menu", EssenceBrewingMenu::new);
+
+    public static final RegistryObject<MenuType<DistillMenu>> DISTILLING_MENU =
+            registerMenuType("distilling_menu", DistillMenu::new);
     private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory){
         return MENUS.register(name, () -> IForgeMenuType.create(factory));
     }

@@ -28,6 +28,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.PYRO_ICHOR);
         simpleItem(ModItems.SPIRIT_ICHOR);
         simpleItem(ModItems.TERRA_ICHOR);
+
     }
 
 

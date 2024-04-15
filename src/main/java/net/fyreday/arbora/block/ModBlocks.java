@@ -1,6 +1,7 @@
 package net.fyreday.arbora.block;
 
 import net.fyreday.arbora.Arbora;
+import net.fyreday.arbora.block.custom.ArboricDistiller;
 import net.fyreday.arbora.block.custom.EssenceBrewingStationBlock;
 import net.fyreday.arbora.block.custom.MagicalLog;
 import net.fyreday.arbora.block.custom.ModFlammableRotatedPillarBock;
@@ -72,12 +73,33 @@ public class ModBlocks {
                 }
             });
 
+    public static final RegistryObject<LiquidBlock> AQUA_ESSENCE_FLUID_BLOCK = BLOCKS.register("aqua_essence_fluid_block",
+            () -> new LiquidBlock(ModFluids.SOURCE_AQUA_ESSENCE, BlockBehaviour.Properties.copy(Blocks.WATER)));
+    public static final RegistryObject<LiquidBlock> AERO_ESSENCE_FLUID_BLOCK = BLOCKS.register("aero_essence_fluid_block",
+            () -> new LiquidBlock(ModFluids.SOURCE_AERO_ESSENCE, BlockBehaviour.Properties.copy(Blocks.WATER)));
+    public static final RegistryObject<LiquidBlock> CRYRO_ESSENCE_FLUID_BLOCK = BLOCKS.register("cryro_essence_fluid_block",
+            () -> new LiquidBlock(ModFluids.SOURCE_CRYRO_ESSENCE, BlockBehaviour.Properties.copy(Blocks.WATER)));
+    public static final RegistryObject<LiquidBlock> PYRO_ESSENCE_FLUID_BLOCK = BLOCKS.register("pyro_essence_fluid_block",
+            () -> new LiquidBlock(ModFluids.SOURCE_PYRO_ESSENCE, BlockBehaviour.Properties.copy(Blocks.WATER)));
     public static final RegistryObject<LiquidBlock> TERRA_ESSENCE_FLUID_BLOCK = BLOCKS.register("terra_essence_fluid_block",
             () -> new LiquidBlock(ModFluids.SOURCE_TERRA_ESSENCE, BlockBehaviour.Properties.copy(Blocks.WATER)));
+    public static final RegistryObject<LiquidBlock> CHAOS_ESSENCE_FLUID_BLOCK = BLOCKS.register("chaos_essence_fluid_block",
+            () -> new LiquidBlock(ModFluids.SOURCE_CHAOS_ESSENCE, BlockBehaviour.Properties.copy(Blocks.WATER)));
+    public static final RegistryObject<LiquidBlock> MIND_ESSENCE_FLUID_BLOCK = BLOCKS.register("mind_essence_fluid_block",
+            () -> new LiquidBlock(ModFluids.SOURCE_MIND_ESSENCE, BlockBehaviour.Properties.copy(Blocks.WATER)));
+    public static final RegistryObject<LiquidBlock> ORDER_ESSENCE_FLUID_BLOCK = BLOCKS.register("order_essence_fluid_block",
+            () -> new LiquidBlock(ModFluids.SOURCE_ORDER_ESSENCE, BlockBehaviour.Properties.copy(Blocks.WATER)));
+    public static final RegistryObject<LiquidBlock> SPIRIT_ESSENCE_FLUID_BLOCK = BLOCKS.register("spirit_essence_fluid_block",
+            () -> new LiquidBlock(ModFluids.SOURCE_SPIRIT_ESSENCE, BlockBehaviour.Properties.copy(Blocks.WATER)));
+
+
     public static final RegistryObject<Block> MAGICAL_SAPLING = registerBlock("magical_sapling",
             () -> new SaplingBlock(new MagicalTreeGrower(),BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
     public static final RegistryObject<Block> ESSENCE_BREWING_STATION = registerBlock("essence_brewing_station",
             () -> new EssenceBrewingStationBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+
+    public static final RegistryObject<Block> ARBORIC_DISTILLER = registerBlock("arboric_distiller",
+            () -> new ArboricDistiller(BlockBehaviour.Properties.copy(Blocks.FURNACE).noOcclusion()));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block){
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

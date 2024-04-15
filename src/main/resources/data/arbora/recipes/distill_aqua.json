@@ -1,0 +1,16 @@
+{
+  "type": "arbora:distilling",
+  "outputs": [
+    {
+      "count": 1,
+      "item": "arbora:aqua_essence_bucket"
+    },
+    {
+      "count": 1,
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "ingredient": {
+    "item": "arbora:aqua_ichor_bottle"
+  }
+}

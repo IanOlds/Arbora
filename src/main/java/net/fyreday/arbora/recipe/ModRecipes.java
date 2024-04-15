@@ -17,6 +17,8 @@ public class ModRecipes {
             SERIALIZERS.register("essence_imbuing", () -> EssenceImbuingRecipe.Serializer.INSTANCE);
     public static final RegistryObject<RecipeSerializer<BrewableRecipe>> ESSENCE_BREWABLE_SERIALIZER =
             SERIALIZERS.register("essence_brewable", () -> BrewableRecipe.Serializer.INSTANCE);
+    public static final RegistryObject<RecipeSerializer<DistillRecipe>> DISTILLING_SERIALIZER =
+            SERIALIZERS.register("distilling", () -> DistillRecipe.Serializer.INSTANCE);
     public static void register(IEventBus eventBus) {
         SERIALIZERS.register(eventBus);
     }

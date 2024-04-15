@@ -28,7 +28,18 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.ORDER_ICHOR.get());
                         pOutput.accept(ModItems.SPIRIT_ICHOR.get());
 
+                        pOutput.accept(ModItems.AQUA_ESSENCE_BUCKET.get());
+                        pOutput.accept(ModItems.AERO_ESSENCE_BUCKET.get());
+                        pOutput.accept(ModItems.CRYRO_ESSENCE_BUCKET.get());
+                        pOutput.accept(ModItems.PYRO_ESSENCE_BUCKET.get());
+                        pOutput.accept(ModItems.TERRA_ESSENCE_BUCKET.get());
+                        pOutput.accept(ModItems.CHAOS_ESSENCE_BUCKET.get());
+                        pOutput.accept(ModItems.MIND_ESSENCE_BUCKET.get());
+                        pOutput.accept(ModItems.ORDER_ESSENCE_BUCKET.get());
+                        pOutput.accept(ModItems.SPIRIT_ESSENCE_BUCKET.get());
+
                         pOutput.accept(ModBlocks.MAGICAL_LOG.get());
+                        pOutput.accept(ModBlocks.MAGICAL_LOG_DEAD.get());
                         pOutput.accept(ModBlocks.MAGICAL_WOOD.get());
                         pOutput.accept(ModBlocks.STRIPPED_MAGICAL_LOG.get());
                         pOutput.accept(ModBlocks.STRIPPED_MAGICAL_WOOD.get());
@@ -37,7 +48,8 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModBlocks.MAGICAL_SAPLING.get());
 
                         pOutput.accept(ModBlocks.ESSENCE_BREWING_STATION.get());
-                        pOutput.accept(ModItems.METAL_DETECTOR.get());
+                        pOutput.accept(ModBlocks.ARBORIC_DISTILLER.get());
+                        //pOutput.accept(ModItems.METAL_DETECTOR.get());
                     })
                     .build());
     public static void register(IEventBus eventBus){

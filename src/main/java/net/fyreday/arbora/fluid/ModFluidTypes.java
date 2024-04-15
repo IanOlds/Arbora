@@ -23,9 +23,42 @@ public class ModFluidTypes {
     public static final DeferredRegister<FluidType> FLUID_TYPES =
             DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, Arbora.MOD_ID);
 
+    public static final RegistryObject<FluidType> AQUA_ESSENCE_FLUID_TYPE = registerEssenceFluid("aqua_essence_fluid",
+            FluidType.Properties.create().lightLevel(2).density(15).viscosity(5).sound(SoundAction.get("drink"),
+                    SoundEvents.HONEY_DRINK), ArboraEnums.SapType.AQUA.getColor());
+
+    public static final RegistryObject<FluidType> AERO_ESSENCE_FLUID_TYPE = registerEssenceFluid("aero_essence_fluid",
+            FluidType.Properties.create().lightLevel(2).density(15).viscosity(5).sound(SoundAction.get("drink"),
+                    SoundEvents.HONEY_DRINK), ArboraEnums.SapType.AERO.getColor());
+
+    public static final RegistryObject<FluidType> CRYRO_ESSENCE_FLUID_TYPE = registerEssenceFluid("cryro_essence_fluid",
+            FluidType.Properties.create().lightLevel(2).density(15).viscosity(5).sound(SoundAction.get("drink"),
+                    SoundEvents.HONEY_DRINK), ArboraEnums.SapType.CRYRO.getColor());
+
+    public static final RegistryObject<FluidType> PYRO_ESSENCE_FLUID_TYPE = registerEssenceFluid("pyro_essence_fluid",
+            FluidType.Properties.create().lightLevel(2).density(15).viscosity(5).sound(SoundAction.get("drink"),
+                    SoundEvents.HONEY_DRINK), ArboraEnums.SapType.PYRO.getColor());
+
     public static final RegistryObject<FluidType> TERRA_ESSENCE_FLUID_TYPE = registerEssenceFluid("terra_essence_fluid",
             FluidType.Properties.create().lightLevel(2).density(15).viscosity(5).sound(SoundAction.get("drink"),
                     SoundEvents.HONEY_DRINK), ArboraEnums.SapType.TERRA.getColor());
+
+    public static final RegistryObject<FluidType> CHAOS_ESSENCE_FLUID_TYPE = registerEssenceFluid("chaos_essence_fluid",
+            FluidType.Properties.create().lightLevel(2).density(15).viscosity(5).sound(SoundAction.get("drink"),
+                    SoundEvents.HONEY_DRINK), ArboraEnums.SapType.CHAOS.getColor());
+
+    public static final RegistryObject<FluidType> MIND_ESSENCE_FLUID_TYPE = registerEssenceFluid("mind_essence_fluid",
+            FluidType.Properties.create().lightLevel(2).density(15).viscosity(5).sound(SoundAction.get("drink"),
+                    SoundEvents.HONEY_DRINK), ArboraEnums.SapType.MIND.getColor());
+
+    public static final RegistryObject<FluidType> ORDER_ESSENCE_FLUID_TYPE = registerEssenceFluid("order_essence_fluid",
+            FluidType.Properties.create().lightLevel(2).density(15).viscosity(5).sound(SoundAction.get("drink"),
+                    SoundEvents.HONEY_DRINK), ArboraEnums.SapType.ORDER.getColor());
+
+    public static final RegistryObject<FluidType> SPIRIT_ESSENCE_FLUID_TYPE = registerEssenceFluid("spirit_essence_fluid",
+            FluidType.Properties.create().lightLevel(2).density(15).viscosity(5).sound(SoundAction.get("drink"),
+                    SoundEvents.HONEY_DRINK), ArboraEnums.SapType.SPIRIT.getColor());
+    
     private static RegistryObject<FluidType> register(String name, FluidType.Properties properties, int tintColor, Vector3f fogColor) {
         return FLUID_TYPES.register(name, () -> new BaseFluidType(WATER_STILL_RL, WATER_FLOWING_RL, ESSENCE_OVERLAY_RL,
                 tintColor, fogColor, properties));

@@ -8,7 +8,16 @@
   "item.arbora.pyro_ichor_bottle" : "Pyro-Ichor Bottle",
   "item.arbora.spirit_ichor_bottle" : "Spirit-Ichor Bottle",
   "item.arbora.terra_ichor_bottle" : "Terra-Ichor Bottle",
+
+  "item.arbora.aqua_essence_bucket" : "Aqua-Essence Bucket",
+  "item.arbora.aero_essence_bucket" : "Aero-Essence Bucket",
+  "item.arbora.cryro_essence_bucket" : "Cryro-Essence Bucket",
+  "item.arbora.pyro_essence_bucket" : "Pyro-Essence Bucket",
   "item.arbora.terra_essence_bucket" : "Terra-Essence Bucket",
+  "item.arbora.chaos_essence_bucket" : "Chaos-Essence Bucket",
+  "item.arbora.mind_essence_bucket" : "Mind-Essence Bucket",
+  "item.arbora.order_essence_bucket" : "Order-Essence Bucket",
+  "item.arbora.spirit_essence_bucket" : "Spirit-Essence Bucket",
 
   "block.arbora.magical_log": "Magical Log",
   "block.arbora.magical_log_dead": "Dead Magical Log",
@@ -22,6 +31,7 @@
 
 
   "block.arbora.essence_brewing_station": "Essence Brewing Station",
+  "block.arbora.arboric_distiller": "Arboric Distiller",
   "creativetab.arbora_tab" : "Arbora Tab",
 
   "item.arbora.metal_detector" : "Metal Detector",
