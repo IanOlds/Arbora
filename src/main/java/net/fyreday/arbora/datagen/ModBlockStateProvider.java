@@ -45,11 +45,11 @@ public class ModBlockStateProvider extends BlockStateProvider {
         saplingBlock(ModBlocks.MAGICAL_SAPLING);
         flatBlockItem(ModBlocks.MAGICAL_SAPLING);
         simpleBlockWithItem(ModBlocks.ESSENCE_BREWING_STATION.get(),
-                new ModelFile.UncheckedModelFile(modLoc("block/essence_brewing_station")));
+                new ModelFile.UncheckedModelFile(modLoc("block/infusion_cauldren")));
 
         myFurnaceBlock((AbstractFurnaceBlock) ModBlocks.ARBORIC_DISTILLER.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/arboric_distiller")),
-                new ModelFile.UncheckedModelFile(modLoc("block/infusion_cauldren")));
+                new ModelFile.UncheckedModelFile(modLoc("block/arboric_distiller_on")));
     }
 
     private void leavesBlock(RegistryObject<Block> blockRegistryObject) {

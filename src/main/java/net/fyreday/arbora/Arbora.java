@@ -126,6 +126,7 @@ public class Arbora
 
 
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.MAGICAL_LOG.get(), RenderType.cutoutMipped());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.ARBORIC_DISTILLER.get(), RenderType.translucent());
 
             ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_AQUA_ESSENCE.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_AQUA_ESSENCE.get(), RenderType.translucent());
